@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const cron = require('node-cron');
 const fs = require('fs');
+const fetch = require('node-fetch'); 
 
 require('dotenv').config(); // To use environment variables from .env file
 
@@ -91,7 +92,6 @@ const compareData = (oldData, newData) => {
     return changes;
 };
 
-// Function to periodically fetch and compare the data
 const fetchAndCompareData = async () => {
     try {
         const spreadsheetId = '1iOwYexBNqsdW3mTzeTHkKerC77y-h0dLHGSCqWBN82c';
@@ -106,11 +106,15 @@ const fetchAndCompareData = async () => {
         const newData = response.data.values || [];
         const oldData = loadPreviousData();  // Load previous data from file
 
-        const changes = compareData(oldData, newData); // Compare old and new data
+        // Compare old and new data
+        const changes = compareData(oldData, newData);
 
         // Log changes
         if (changes.length > 0) {
             console.log('Detected changes:', changes);
+
+            // Send detected changes to the backend
+            await sendLogsToBackend(changes);
         } else {
             console.log('No changes detected.');
         }
@@ -122,10 +126,34 @@ const fetchAndCompareData = async () => {
     }
 };
 
+// Function to send logs to backend
+const sendLogsToBackend = async (changes) => {
+    try {
+        const response = await fetch('http://localhost:5000/api/shifts/sheets/log', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ changes }),  // Send changes as a JSON payload
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to send logs: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log('Logs successfully sent:', result);
+    } catch (error) {
+        console.error('Error sending logs:', error);
+    }
+};
+
 // Schedule the fetch every minute
-cron.schedule('* * * * *', () => {
-    console.log('Fetching schedule data every minute...');
-    fetchAndCompareData(); // Call the async function within the cron job
-});
+if (process.env.NODE_ENV !== 'test') {
+    cron.schedule('* * * * *', () => {
+        console.log('Fetching schedule data every minute...');
+        fetchAndCompareData();
+    });
+}
 
 module.exports = router;
