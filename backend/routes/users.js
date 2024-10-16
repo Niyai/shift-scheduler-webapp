@@ -6,6 +6,13 @@ const router = express.Router();
 require('dotenv').config();
 const pool = require('../db'); // Assuming pool is defined in 'db.js'
 
+router.options('/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(204); // No content
+});
+
 // Register a new user
 router.post('/register', async (req, res) => {
     const { username, email, password, title } = req.body;
@@ -50,8 +57,13 @@ router.get('/test-connection', async (req, res) => {
     }
 });
 
+
 // User login
 router.post('/login', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+   
     const { email, password } = req.body;
 
     try {
@@ -73,10 +85,11 @@ router.post('/login', async (req, res) => {
             expiresIn: '1h',
         });
 
-        res.json({ token });
+        // Send the token with a 200 status code
+        return res.status(200).json({ token }); // <-- Added 200 status code
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ message: 'Server error' });
     }
 });
 
