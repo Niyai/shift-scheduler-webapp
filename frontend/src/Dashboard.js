@@ -1,14 +1,24 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
+import TeamStrength from './TeamStrength';
+import Logs from './Logs';
 
-const Dashboard = () => {
+function Dashboard({ data }) {
     return (
         <div>
-            <h1>Dashboard</h1>
-            {/* Other dashboard components, navigation, etc. */}
-            <Outlet /> {/* Renders child routes */}
+            <h2>Dashboard</h2>
+            <nav>
+                <Link to="/dashboard/teamstrength">Team Strength</Link> | 
+                <Link to="/dashboard/logs">Logs</Link> {/* Add Logs tab */}
+            </nav>
+            <div>
+                <Routes>
+                    <Route path="teamstrength" element={<TeamStrength />} />
+                    <Route path="logs" element={<Logs />} />
+                </Routes>
+            </div>
         </div>
     );
-};
+}
 
 export default Dashboard;

@@ -17,6 +17,7 @@
     "googleapis": "^144.0.0",
     "mongoose": "^8.7.0",
     "node-cron": "^3.0.3",
-    "nodemailer": "^6.9.15"
+    "nodemailer": "^6.9.15",
+    "react-router-dom": "^6.27.0"
   }
 }

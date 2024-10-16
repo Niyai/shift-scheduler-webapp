@@ -4,6 +4,9 @@ import Login from './Login';
 import Dashboard from './Dashboard';
 import { fetchProtectedData } from './api';
 import TeamStrength from './TeamStrength';
+import SignUp from './SignUp';
+import Logs from './Logs';
+
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +49,7 @@ function App() {
             <Routes>
                 {/* If not authenticated, show login */}
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
-
+		<Route path="/signup" element={<SignUp />} /> {/* New sign-up route */}
                 {/* Protected route for the dashboard */}
                 <Route 
                     path="/dashboard" 
@@ -55,10 +58,10 @@ function App() {
 
                 {/* TeamStrength under its own route */}
                 <Route 
-                    path="/teamstrength" 
+                    path="/dashboard/teamstrength" 
                     element={isAuthenticated ? <TeamStrength /> : <Navigate to="/login" />} 
                 />
-
+		<Route path="/dashboard/logs" element={isAuthenticated ? <Logs /> : <Navigate to="/login" />} />
                 {/* Redirect root to login */}
                 <Route path="/" element={<Navigate to="/login" />} />
             </Routes>
