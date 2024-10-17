@@ -52,7 +52,7 @@ function App() {
 		<Route path="/signup" element={<SignUp />} /> {/* New sign-up route */}
                 {/* Protected route for the dashboard */}
                 <Route 
-                    path="/dashboard" 
+                    path="/dashboard/*" 
                     element={isAuthenticated ? <Dashboard data={userData} /> : <Navigate to="/login" />} 
                 />
 

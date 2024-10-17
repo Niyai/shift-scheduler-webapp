@@ -99,3 +99,23 @@ label {
     padding: 15px;
   }
 }
+
+.dashboard-tabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    background-color: #333; /* Dark background for the tab area */
+    border-bottom: 2px solid #444; /* Border below the tabs */
+}
+
+.dashboard-tab {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.dashboard-tab:hover {
+    background-color: #555; /* Highlight color on hover */
+    border-radius: 5px;
+}

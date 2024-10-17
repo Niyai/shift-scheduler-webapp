@@ -85,6 +85,11 @@ const SignUp = () => {
                 </div>
                 <button type="submit" className="btn">Sign Up</button>
             </form>
+            <div className="navigation-buttons">
+                <button className="btn" onClick={() => navigate('/login')}>
+                    Already have an account? Login
+                </button>
+            </div>
         </div>
     );
 };

@@ -8,8 +8,8 @@ function Dashboard({ data }) {
         <div>
             <h2>Dashboard</h2>
             <nav>
-                <Link to="/dashboard/teamstrength">Team Strength</Link> | 
-                <Link to="/dashboard/logs">Logs</Link> {/* Add Logs tab */}
+                <Link to="/dashboard/teamstrength" className="dashboard-tab">Team Strength</Link> | 
+                <Link to="/dashboard/logs" className="dashboard-tab">Logs</Link> {/* Add Logs tab */}
             </nav>
             <div>
                 <Routes>
