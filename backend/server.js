@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
 const { Pool } = require('pg');
 const jwt = require('jsonwebtoken');
-
+const leaveRoutes = require('./routes/leave');
 dotenv.config(); // Load environment variables from .env file
+const agentRoutes = require('./routes/agents');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,6 +27,8 @@ const PORT = process.env.PORT || 5000;
 // Add routes
 app.use('/api/users', userRoutes);
 app.use('/api/shifts', require('./routes/shifts'));
+app.use('/api/leave', leaveRoutes);
+app.use('/api/agents', agentRoutes);
 
 // Sample route to test server
 app.get('/', (req, res) => {

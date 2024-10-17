@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import TeamStrength from './TeamStrength';
 import Logs from './Logs';
+import LeaveTab from './LeaveTab';
 
-function Dashboard({ data }) {
+const Dashboard = ({ user }) => {
+    const [activeTab, setActiveTab] = useState('teamstrength');
+
     return (
-        <div>
-            <h2>Dashboard</h2>
-            <nav>
-                <Link to="/dashboard/teamstrength" className="dashboard-tab">Team Strength</Link> | 
-                <Link to="/dashboard/logs" className="dashboard-tab">Logs</Link> {/* Add Logs tab */}
-            </nav>
-            <div>
-                <Routes>
-                    <Route path="teamstrength" element={<TeamStrength />} />
-                    <Route path="logs" element={<Logs />} />
-                </Routes>
+        <div className="dashboard">
+            {/* Navigation tabs */}
+            <div className="tabs">
+                <button onClick={() => setActiveTab('teamstrength')}>Team Strength</button>
+                <button onClick={() => setActiveTab('logs')}>Logs</button>
+                <button onClick={() => setActiveTab('leave')}>Leave Planner</button>
+            </div>
+
+            {/* Content based on active tab */}
+            <div className="tab-content">
+                {activeTab === 'teamstrength' && <TeamStrength user={user} />}
+                {activeTab === 'logs' && <Logs user={user} />}
+                {activeTab === 'leave' && <LeaveTab user={user} />}
             </div>
         </div>
     );
-}
+};
 
 export default Dashboard;

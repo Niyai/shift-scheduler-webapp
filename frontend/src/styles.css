@@ -119,3 +119,32 @@ label {
     background-color: #555; /* Highlight color on hover */
     border-radius: 5px;
 }
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tabs button:hover {
+    background-color: #444;
+}
+
+.tabs button:focus {
+    outline: none;
+    background-color: #555;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
