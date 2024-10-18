@@ -5,21 +5,7 @@ const api = axios.create({
     baseURL: 'http://localhost:5000',
 });
 
-// Function to fetch protected data using the stored token
-export const fetchProtectedData = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        throw new Error('No token found');
-    }
 
-    const response = await api.get('/protected/data', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    return response.data; // Return the data
-};
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
@@ -67,3 +53,13 @@ export const approveLeaveRequest = async (id) => {
   }
 };
 
+// Approve leave request (if you are handling approval from the frontend)
+export const denyLeaveRequest = async (id) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/leave/${id}/deny`);
+    return response.data;
+  } catch (error) {
+    console.error('Error denying leave request:', error);
+    throw error;
+  }
+};

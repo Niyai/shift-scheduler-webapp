@@ -148,3 +148,16 @@ label {
 .tab-content {
     margin-top: 20px;
 }
+
+/* styles.css */
+.actions {
+    display: none;
+}
+
+tbody tr:hover .actions {
+    display: table-cell;
+}
+
+.actions button {
+    margin-right: 10px;
+}

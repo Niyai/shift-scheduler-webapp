@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAgents, createLeaveRequest, getLeaveRequests } from './api'; // Import API calls
 import LeaveRequestsList from './LeaveRequestsList'; // Component to display leave requests
+import { UserContext } from './UserContext';
 
 const LeaveTab = ({ user }) => {
     const [agents, setAgents] = useState([]);
@@ -57,15 +58,14 @@ const LeaveTab = ({ user }) => {
             {/* Leave Request Form */}
             <form onSubmit={handleSubmit}>
                 <label>Agent Name:</label>
-                <select value={agentName} onChange={(e) => setAgentName(e.target.value)}>
-                    <option value="">Select Agent</option>
-                    {agents.map((agent) => (
-                        <option key={agent.name} value={agent.name}>
-                            {agent.name}
-                        </option>
-                    ))}
-                </select>
-
+		<select value={agentName} onChange={(e) => setAgentName(e.target.value)}>
+		    <option value="">Select Agent</option>
+ 		    {agents.map((agent) => (
+       			 <option key={agent.id} value={agent.name}>
+               		     {agent.name}
+       		    	 </option>
+   		    ))}
+		</select>
                 <label>Leave Type:</label>
                 <select value={leaveType} onChange={(e) => setLeaveType(e.target.value)}>
                     <option value="">Select Leave Type</option>

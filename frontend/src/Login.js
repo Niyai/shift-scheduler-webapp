@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext';
 import './styles.css'; // Import your styles
 
 const Login = ({ onLogin }) => {
+    const { setUser } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -28,6 +30,10 @@ const Login = ({ onLogin }) => {
 
             const data = await response.json();
             onLogin(data.token); // Pass token to parent
+            
+            // Ensure the backend sends back the user details along with the token
+            setUser(data.user); // Set the user context with the user details
+
             navigate('/dashboard'); // Redirect to dashboard
         } catch (err) {
             setError(err.message); // Set error message
