@@ -66,11 +66,38 @@ This web application provides a shift scheduling and management system for teams
 
 ## API Endpoints
 
-- **/api/users/register**: Register a new user.
-- **/api/users/login**: Authenticate user and return a JWT token.
-- **/api/shifts/team-strength**: Get team strength data based on date and hour filters.
-- **/api/shifts/log**: Get schedule change logs.
-- **/api/leave-requests**: Manage leave requests (POST, GET, PUT, DELETE).
+### **Authentication**
+- **POST /api/users/register**: Register a new user.
+    - Request body: `{ "username", "email", "password", "title" }`
+- **POST /api/users/login**: Authenticate user and return a JWT token.
+    - Request body: `{ "email", "password" }`
+- **GET /api/users/:id**: Get details of a specific user by ID.
+- **PUT /api/users/update**: Update the user's profile details (e.g., username, email, title).
+    - Request body: `{ "username", "email", "title" }`
+
+### **Shifts**
+- **GET /api/shifts/team-strength?date=&hour=**: Get team strength data based on the date and hour.
+    - Query params: `date`, `hour`
+- **GET /api/shifts/log**: Retrieve the log of all schedule changes.
+- **POST /api/shifts/update**: Update shift details for an agent.
+    - Request body: `{ "agent_name", "shift", "date" }`
+- **GET /api/shifts/agent/:id**: Retrieve shift details for a specific agent.
+- **POST /api/shifts/import**: Import shift data from the Google Sheet into the database.
+
+### **Leave Requests**
+- **GET /api/leave-requests**: Retrieve all leave requests.
+- **POST /api/leave-requests**: Create a new leave request.
+    - Request body: `{ "agent_name", "leave_type", "start_date", "end_date" }`
+- **PUT /api/leave-requests/:id**: Update an existing leave request.
+    - Request body: `{ "leave_type", "start_date", "end_date" }`
+- **DELETE /api/leave-requests/:id**: Delete a leave request by ID.
+- **POST /api/leave-requests/approve/:id**: Approve a leave request.
+- **POST /api/leave-requests/deny/:id**: Deny a leave request.
+
+### **Logs**
+- **GET /api/shifts/logs**: Retrieve the list of all changes made to the shift schedule.
+    - Includes change details, timestamp, and email notification status.
+- **GET /api/logs/user/:userId**: Get logs filtered by a specific user.
 
 ## Technologies Used
 
@@ -79,3 +106,8 @@ This web application provides a shift scheduling and management system for teams
 - **Authentication**: JWT (JSON Web Tokens)
 - **Google Sheets API**: Synchronization of shift data
 - **Styling**: CSS with modern design elements (dark theme and responsive UI)
+
+## Future Enhancements
+- **Push Notifications**: Add real-time notifications for schedule updates.
+- **Agent Availability Checker**: Allow agents to mark their availability in advance.
+- **Advanced Filtering**: Add more detailed filters for managers to view team strength.
