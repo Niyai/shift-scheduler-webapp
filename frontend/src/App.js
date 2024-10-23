@@ -9,6 +9,8 @@ import SignUp from './SignUp';
 import Logs from './Logs';
 import { UserProvider } from './UserContext';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -58,6 +60,7 @@ function App() {
                     <Route path="/dashboard/logs" element={isAuthenticated ? <Logs /> : <Navigate to="/login" />} />
                     <Route path="/" element={<Navigate to="/login" />} />
                 </Routes>
+		<ToastContainer />
             </div>
         </UserProvider>
     );

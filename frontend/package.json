@@ -651,6 +651,7 @@
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
     "react-smooth": "^4.0.1",
+    "react-toastify": "^10.0.6",
     "react-transition-group": "^4.4.5",
     "read-cache": "^1.0.0",
     "readable-stream": "^3.6.2",

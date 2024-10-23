@@ -3,7 +3,7 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: #1a1a2e;
   color: #e0e0e0;
-  margin: 0;
+  margin: 2%;
   padding: 0;
 }
 
@@ -16,10 +16,10 @@ input, button {
 }
 
 /* Dark Background Gradient */
-.login-container, .team-strength-container {
+.login-container, .team-strength-container, .leave-request-container {
   width: 100%;
   max-width: 400px;
-  margin: 100px auto;
+  margin: 0 auto;
   padding: 20px;
   background: linear-gradient(145deg, #2b2d42, #2f3640);
   border-radius: 12px;
@@ -39,14 +39,33 @@ input[type="password"],
 input[type="date"],
 input[type="number"],
 input[type="text"] {
-  width: 100%;
+  width: 96%;
   padding: 10px;
-  margin: 10px 0;
+  color: #fff;
+  font-size: 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin: 10px;
   background-color: #3a3d4d;
   color: #fff;
   font-size: 16px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 10px;
+    background-color: #3a3d4d;
+    color: #fff;
+    font-size: 16px;
 }
 
 input:focus {
@@ -66,6 +85,7 @@ button {
   cursor: pointer;
   transition: background 0.3s;
   margin-top: 10px;
+  margin: 0 auto;
 }
 
 button:hover {
@@ -149,15 +169,18 @@ label {
     margin-top: 20px;
 }
 
-/* styles.css */
+
+
+.small-btn {
+    padding: 5px 10px; /* Adjust size */
+    font-size: 14px; /* Smaller font */
+    margin: 0 5px; /* Add space between buttons */
+    display: inline-block; /* Align them side by side */
+}
+
 .actions {
-    display: none;
+    display: flex; /* Use flexbox for alignment */
+    gap: 10px; /* Add spacing between buttons */
+    justify-content: center; /* Center the buttons */
 }
 
-tbody tr:hover .actions {
-    display: table-cell;
-}
-
-.actions button {
-    margin-right: 10px;
-}
