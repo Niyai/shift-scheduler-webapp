@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { getAgents, createLeaveRequest, getLeaveRequests } from "./api"; // Import API calls
 import LeaveRequestsList from "./LeaveRequestsList"; // Component to display leave requests
 import { UserContext } from "./UserContext";
-import { approveLeaveRequest, denyLeaveRequest } from "./api";
+import EditLeaveModal from "./EditLeaveModal";
+import {
+  approveLeaveRequest,
+  denyLeaveRequest,
+  editLeaveRequest,
+  deleteLeaveRequest,
+} from "./api";
 import { toast } from "react-toastify";
 
 const LeaveTab = ({ user }) => {
@@ -13,6 +19,29 @@ const LeaveTab = ({ user }) => {
   const [endDate, setEndDate] = useState("");
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all"); // To filter by leave status
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLeaveRequest, setSelectedLeaveRequest] = useState(null);
+  const handleEditClick = (leaveRequest) => {
+    setSelectedLeaveRequest(leaveRequest);
+    setIsModalOpen(true); // Open the modal when "Edit" is clicked
+  };
+  const handleSave = async (id, updatedLeaveDetails) => {
+    try {
+      await editLeaveRequest(id, updatedLeaveDetails); // Call API to update leave request
+
+      // Update leave requests in state
+      setLeaveRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === id ? { ...request, ...updatedLeaveDetails } : request
+        )
+      );
+
+      toast.success("Leave request updated successfully!");
+      setIsModalOpen(false); // Close modal after saving
+    } catch (error) {
+      toast.error("Error updating leave request!");
+    }
+  };
 
   // Fetch list of agents when the component mounts
   useEffect(() => {
@@ -83,6 +112,49 @@ const LeaveTab = ({ user }) => {
     }
   };
 
+  // In LeaveTab.js
+
+  const handleEdit = async (id) => {
+    // Example form values; you should collect these from your form inputs (e.g., state or controlled inputs)
+    const updatedRequest = {
+      leaveType: "Annual Leave", // User input for leave type
+      startDate: "2024-10-24", // User input for start date
+      endDate: "2024-10-28", // User input for end date
+      status: "Approved", // Optionally updated status
+    };
+
+    try {
+      await editLeaveRequest(id, updatedRequest); // Call API with new details
+
+      // Update the state to reflect the changes in the UI
+      setLeaveRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === id ? { ...request, ...updatedRequest } : request
+        )
+      );
+
+      toast.success("Leave request updated successfully!"); // Success notification
+    } catch (error) {
+      toast.error("Error updating leave request!"); // Error notification
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this leave request?"
+      );
+      if (!confirmed) return;
+      await deleteLeaveRequest(id);
+      setLeaveRequests((prevRequests) =>
+        prevRequests.filter((request) => request.id !== id)
+      );
+      toast.success("Leave request deleted successfully!"); // Show success notification
+    } catch (error) {
+      toast.error("Error deleting leave request!"); // Show error notification
+    }
+  };
+
   return (
     <div>
       <h2>Leave Planner</h2>
@@ -150,6 +222,8 @@ const LeaveTab = ({ user }) => {
         leaveRequests={leaveRequests}
         approveLeaveRequest={approveLeaveRequest}
         denyLeaveRequest={denyLeaveRequest}
+        editLeaveRequest={editLeaveRequest}
+        deleteLeaveRequest={deleteLeaveRequest}
       />
     </div>
   );

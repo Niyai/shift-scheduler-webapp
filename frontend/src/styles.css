@@ -20,6 +20,7 @@ input, button {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  margin-top: 10px;
   padding: 20px;
   background: linear-gradient(145deg, #2b2d42, #2f3640);
   border-radius: 12px;
@@ -85,7 +86,7 @@ button {
   cursor: pointer;
   transition: background 0.3s;
   margin-top: 10px;
-  margin: 0 auto;
+
 }
 
 button:hover {
@@ -183,4 +184,55 @@ label {
     gap: 10px; /* Add spacing between buttons */
     justify-content: center; /* Center the buttons */
 }
+
+/* EditLeaveModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #ccc;
+}
+
 
